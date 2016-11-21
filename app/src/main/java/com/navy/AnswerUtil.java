@@ -1,59 +1,54 @@
 package com.navy;
 
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 
 public class AnswerUtil {
 	
-	//ÓÃÓÚ¼ÆËãÒÆÎ»ÔËËãµÄ¶ş½øÖÆ
+
 	int init_shift_byte = 0b0001;
 	
-	int no_selection = 0b0000;//±íÊ¾ÓÃ»§Ã»ÓĞÑ¡Ôñ´ğ°¸
+	int no_selection = 0b0000;//
 	int A = 0b0001;   //1	65	    
 	int B = 0b0010;	 //2	66	
 	int C = 0b0100;	 //4	67	
 	int D = 0b1000;//8	68
-	/**
-	 * ¼ÆËã¼òµ¥µ¥Ñ¡µÄÕıÈ·ÂÊ£¬¼òµ¥µ¥Ñ¡ÊÇÖ»ÓĞABCD
-	 * ×¢Òâ£ºÒ»´Î×î¶à¶Ô20¸öÑ¡ÔñÌâµÄ´ğ°¸
-	 * @return
-	 */
-	public double getSimpleSingleSelectionAccuracy(String answers, String userAnswers) {
-		int answersInt = parseAnswer(answers);
-		int userAnswersInt = parseAnswer(userAnswers);
-		String result = Integer.toHexString(answersInt ^ userAnswersInt);
-		
-		System.out.println("½á¹û¶ÔÓ¦µÄ16½øÖÆÎª"+result); 
-		double accuracy = 1-((result.replaceAll("0", "")).length())*1.0/(answers.length());//0ÊÇÕıÈ·µÄÑ¡Ôñ
-		System.out.println("ÕıÈ·ÂÊÎª"+accuracy);
+
+	public BigDecimal getSimpleSingleSelectionAccuracy(String answers, String userAnswers) {
+		BigInteger answersInt = parseAnswer(answers);
+		BigInteger userAnswersInt = parseAnswer(userAnswers);
+		BigInteger result = answersInt.xor(userAnswersInt);
+		System.out.println("è¿ç®—ç»“æœ:" + result.toString(16));
+		int non_zeros = result.toString(16).replaceAll("0", "").length();//è®¡ç®—éé›¶æ•°
+		BigDecimal accuracy = new BigDecimal(""+ (answers.length()-non_zeros)*1.0)
+				.divide(new BigDecimal(answers.length() +""), BigDecimal.ROUND_UP);
+
 		return accuracy;
 	}
 	
-	/*
-	  Á÷³Ì£¬½«answer±ä³É¶ş½øÖÆ×Ö·û´®
-	 ¶ş½øÖÆ»»Ëã£¬ 
-	 Êä³ö´ğ°¸
-	 */
-	public int parseAnswer(String answer){
+
+	public BigInteger parseAnswer(String answer){
 		char []selections = answer.toCharArray();
-		int answersInt = 0;
+		BigInteger answersInt = BigInteger.ZERO;
 		
 		for(int i=0, length = selections.length; i<length; i++){
 			int answerInt = parseSelection(selections[i]);
 		
 			if (i == 0) {
-				answersInt = answerInt;		
+				answersInt = answersInt.add(new BigInteger(""+answerInt));
 			} else {
-				answersInt =(answersInt<<4) + answerInt;//±ØĞë¼ÓÀ¨ºÅ£¬ÔËËãµÄÓÅÏÈ¼¶
+				answersInt =answersInt.shiftLeft(4).add(new BigInteger(""+answerInt));//å¿…é¡»åŠ æ‹¬å·,è¿ç®—çš„ä¼˜å…ˆçº§
 			}
 		}
-		System.out.println("´ğ°¸"+answer+"¶ÔÓ¦µÄ16½øÖÆ"+Integer.toHexString(answersInt));
+		System.out.println("ç­”æ¡ˆ"+answer+"å¯¹äºçš„16è¿›åˆ¶"+answersInt.toString(16));
 		return answersInt;
 	
 	}
 	
 	/**
 	 * 
-	 * @param selection Ö»ÄÜÊÇABCDÖĞµÄÆäÖĞÒ»¸ö
+	 * @param selection
 	 * @return
 	 */
 	public int parseSelection(char selection){
@@ -71,8 +66,8 @@ public class AnswerUtil {
 	public static String printAnswer(int answer){
 		String temp = Integer.toBinaryString(answer);
 		if (temp.length()>4) {
-			System.out.println(answer+"×ª»»µÄ¶ş½øÖÆµÄ×Ö·û´®²»ÄÜ´óÓÚ4");
-			throw new IllegalArgumentException(answer+"×ª»»µÄ¶ş½øÖÆµÄ×Ö·û´®²»ÄÜ´óÓÚ4");
+			System.out.println(answer+"å¯¹åº”çš„äºŒè¿›åˆ¶é•¿åº¦ä¸èƒ½å¤§äº4");
+			throw new IllegalArgumentException(answer+"å¯¹åº”çš„äºŒè¿›åˆ¶é•¿åº¦ä¸èƒ½å¤§äº4");
 		}
 		int needZeros = 4 - temp.length();
 		for(int i = 0; i<needZeros; i++) {

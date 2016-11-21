@@ -24,9 +24,9 @@ public class TestJxl {
 			Workbook workbook = Workbook.getWorkbook(file);
 			Sheet sheet =  workbook.getSheet(0);
 			int rows = sheet.getRows();
-			System.out.println("行数为 "+ rows);
+
 			int cols = sheet.getColumns();
-			System.out.println("列数为 "+ cols);
+
 			
 			Cell cell =  sheet.getCell(2, 0);
 			System.out.println(cell.getContents());

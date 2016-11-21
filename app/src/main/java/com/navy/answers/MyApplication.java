@@ -2,7 +2,7 @@ package com.navy.answers;
 
 import android.app.Application;
 
-import com.navy.answers.util.LogUtil;
+import com.navy.util.LogUtil;
 
 /**
  * Created by navychen on 16/11/18.

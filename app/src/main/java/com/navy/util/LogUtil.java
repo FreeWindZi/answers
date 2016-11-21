@@ -1,4 +1,4 @@
-package com.navy.answers.util;
+package com.navy.util;
 
 import android.util.Log;
 

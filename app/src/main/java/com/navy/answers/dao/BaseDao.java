@@ -1,24 +1,23 @@
 package com.navy.answers.dao;
 
 import android.content.Context;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
-import jxl.read.biff.BiffException;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 
 /**
- * Created by navychen on 16/11/18.
+ * Created by navychen on 16/11/21.
  */
-public abstract class BaseDao {
+public class BaseDao  {
 
-    protected String TAG = this.getClass().getSimpleName();
 
-    protected Context context;
+    private Context context;
 
-    abstract public void initModelFromExcel(String name) throws IOException, BiffException;
+    MySqLiteHelper mySqLiteHelper;
 
     public BaseDao(Context context) {
         this.context = context;
+        mySqLiteHelper = new MySqLiteHelper(context);
     }
+
+
 }
