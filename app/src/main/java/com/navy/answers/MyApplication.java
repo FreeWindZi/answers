@@ -1,21 +1,25 @@
 package com.navy.answers;
 
 import android.app.Application;
+import android.content.Context;
+import android.support.multidex.MultiDex;
+import android.support.multidex.MultiDexApplication;
 
 import com.navy.util.LogUtil;
 
 /**
  * Created by navychen on 16/11/18.
  */
-public class MyApplication extends Application {
+public class MyApplication  extends MultiDexApplication {
 
     public static Application app;
 
     @Override
-    public void onCreate() {
-        super.onCreate();
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
         app = this;
-        LogUtil.d("", "---------------");
     }
+
 
 }

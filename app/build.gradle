@@ -11,7 +11,8 @@ android {
         versionCode 10
         versionName "1.0"
 
-
+        multiDexEnabled true
+        android.enforceUniquePackageName=false
     }
     buildTypes {
         release {
@@ -22,11 +23,21 @@ android {
     sourceSets.main {
         assets.srcDir "assets"
     }
+    packagingOptions {
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE'
+    }
+    dexOptions {
+        incremental true
+        javaMaxHeapSize "4g"
+    }
+
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
+    compile 'com.android.support:multidex:1.0.0'
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.android.support:design:23.4.0'
     compile 'com.navy.chen:permission-helper:0.3'

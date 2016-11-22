@@ -8,6 +8,7 @@ import java.util.List;
  * Created by navychen on 16/11/18.
  */
 public abstract class BasePaperAnswer implements Serializable {
+    protected int id;
     protected int year;
     protected String type;
     protected List<Section> sections;
@@ -33,5 +34,13 @@ public abstract class BasePaperAnswer implements Serializable {
 
     public void setSections(List<Section> sections) {
         this.sections = sections;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

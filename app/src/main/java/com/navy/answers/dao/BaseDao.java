@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public class BaseDao  {
 
-
+    protected  String TAG = getClass().getSimpleName();
     private Context context;
 
     MySqLiteHelper mySqLiteHelper;

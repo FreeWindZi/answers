@@ -1,0 +1,21 @@
+CREATE TABLE IF NOT EXISTS section
+(
+	id integer PRIMARY KEY AUTOINCREMENT,
+	paperId integer,
+	startQustionID integer,
+	name varchar,
+	answer varchar,
+	isAnswer tinyint,
+	userAnswer varchar,
+	times integer,
+	dateTime DATETIME
+);
+
+
+CREATE TABLE IF NOT EXISTS section
+(
+	id integer PRIMARY KEY AUTOINCREMENT,
+	year integer,
+	type varchar
+)
+
